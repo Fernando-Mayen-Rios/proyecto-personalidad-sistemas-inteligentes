@@ -77,7 +77,7 @@ python codigo_union.py --entrada RespuestasFormsOriginales.xlsx --salida .
 
 ## Tablero analítico
 
-- Tablero web en la nube (no Excel): [pegar aquí el link del tablero]
+- Tablero web en la nube (no Excel): https://claude.ai/artifact/32nDuLq2Q2yYYz4YH49g7K 
 - Versión alternativa en Looker Studio: [pegar aquí el link, si se creó]
 
 ## Datos y privacidad
