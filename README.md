@@ -1,1 +1,0 @@
-# proyecto-personalidad-sistemas-inteligentes
