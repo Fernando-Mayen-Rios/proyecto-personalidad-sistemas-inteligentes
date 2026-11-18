@@ -1,7 +1,13 @@
 # Test de personalidad: ¿se puede predecir el perfil con formularios?
 
 Proyecto de **Sistemas Inteligentes** · UNAM · Matemáticas Aplicadas y Computación
-Equipo: [Nombres del equipo] · Entrega: 18 de noviembre de 2026
+Equipo: 
+Chávez Ramírez Iker David
+Mayen Rios Fernando
+Rangel Sosa Oscar Yardel
+Sanchez Lopez Miguel Angel
+Torres Montes Sharon Danae
+ · Entrega: 18 de noviembre de 2026
 
 ## ¿De qué trata?
 
@@ -92,6 +98,7 @@ python codigo_union.py --entrada RespuestasFormsOriginales.xlsx --salida .
 - No se imputaron datos fuera del modelado; los valores sospechosos (edad 0, 15 horas de escucha) se conservaron y se marcaron.
 - Son muy pocas personas: los resultados son **exploratorios**.
 - El perfil se definió con dos preguntas del formulario; no es un test psicométrico validado.
+- Los resultados del bosque aleatorio pueden variar un poco según la versión de scikit-learn.
 
 ## Versiones con las que se probó
 
