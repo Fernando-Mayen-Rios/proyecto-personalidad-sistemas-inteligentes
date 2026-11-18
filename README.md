@@ -98,7 +98,7 @@ python codigo_union.py --entrada RespuestasFormsOriginales.xlsx --salida .
 - No se imputaron datos fuera del modelado; los valores sospechosos (edad 0, 15 horas de escucha) se conservaron y se marcaron.
 - Son muy pocas personas: los resultados son **exploratorios**.
 - El perfil se definió con dos preguntas del formulario; no es un test psicométrico validado.
-- Los resultados del bosque aleatorio pueden variar un poco según la versión de scikit-learn.
+- Los resultados de las tablas son los obtenidos al ejecutar los cuadernos en Google Colab; el bosque aleatorio y el agrupamiento pueden variar un poco según la versión de scikit-learn.
 
 ## Versiones con las que se probó
 
