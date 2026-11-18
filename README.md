@@ -83,7 +83,7 @@ python codigo_union.py --entrada RespuestasFormsOriginales.xlsx --salida .
 
 ## Tablero analítico
 
-- Tablero web en la nube (no Excel): https://mellifluous-sunflower-199423.netlify.app  
+- Tablero web en la nube (no Excel): https://astounding-cactus-17e956.netlify.app 
 - Tablero en Looker Studio: https://datastudio.google.com/reporting/e5c1feb6-8241-4253-bd8a-579e87236460 
 
 ## Datos y privacidad
