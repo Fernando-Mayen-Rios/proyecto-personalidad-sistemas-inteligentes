@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tablero analítico · Test de personalidad</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#f4f6f8;--card:#fff;--ink:#14212b;--mut:#566574;--line:#dde3e9;--a:#1f7a8c;--b:#d98324;--ref:#b23a48;color-scheme:light dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e151b;--card:#17212a;--ink:#e7edf2;--mut:#9badbc;--line:#2a3743;--a:#4db3c6;--b:#f0a34a;--ref:#e5707d}}
+:root[data-theme="dark"]{--bg:#0e151b;--card:#17212a;--ink:#e7edf2;--mut:#9badbc;--line:#2a3743;--a:#4db3c6;--b:#f0a34a;--ref:#e5707d}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:1020px;margin:0 auto;padding:28px 18px 40px}
+h1{font-size:clamp(26px,5vw,40px);line-height:1.15;margin:0 0 10px;letter-spacing:-.02em;max-width:22ch}
+.sub{color:var(--mut);max-width:62ch;margin:0 0 26px}
+h2{font-size:17px;margin:0 0 4px}.nota{color:var(--mut);font-size:14px;margin:0 0 14px}
+.kpis,.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));margin-bottom:14px}
+.grid{grid-template-columns:repeat(auto-fit,minmax(310px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.kpi b{display:block;font-size:34px;line-height:1.1;font-variant-numeric:tabular-nums}.kpi span{color:var(--mut);font-size:14px}
+.filtro{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 14px}.filtro span{color:var(--mut);font-size:14px}
+button{font:inherit;font-size:14px;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+button:focus-visible{outline:3px solid var(--a);outline-offset:2px}
+.row{display:grid;grid-template-columns:minmax(110px,38%) 1fr 74px;gap:10px;align-items:center;margin:7px 0;font-size:14px}
+.track{height:12px;background:var(--line);border-radius:6px;position:relative;overflow:visible}.fill{height:100%;border-radius:6px}
+.row b{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.grp{margin:0 0 14px}.grp h4{font-size:14px;margin:0 0 2px;font-weight:600}
+.ref{position:absolute;left:50%;top:-5px;bottom:-5px;width:0;border-left:2px dashed var(--ref)}
+.leyenda{display:flex;gap:16px;font-size:13px;color:var(--mut);margin-top:8px}.leyenda i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px}
+ul{margin:0;padding-left:18px;color:var(--mut);font-size:14px}li{margin:4px 0}
+.alerta{border-left:4px solid var(--ref)}
+footer{color:var(--mut);font-size:13px;margin-top:22px}
+</style></head><body><main>
+<h1>¿Se puede predecir la personalidad con estos datos?</h1>
+<p class="sub" id="hero"></p>
+<section class="kpis" id="kpis"></section>
+<div class="filtro" role="group" aria-label="Filtrar por género"><span>Género:</span>
+<button data-g="Todos" aria-pressed="true">Todos</button><button data-g="Femenino" aria-pressed="false">Femenino</button><button data-g="Masculino" aria-pressed="false">Masculino</button></div>
+<section class="grid">
+<div class="card"><h2>Perfiles</h2><p class="nota" id="nperf"></p><div id="perfiles"></div>
+<div class="leyenda"><span><i style="background:var(--a)"></i>Introvertido</span><span><i style="background:var(--b)"></i>No introvertido</span></div></div>
+<div class="card"><h2>Características de cada perfil</h2><p class="nota">Porcentaje de personas de cada perfil que cumple cada característica.</p><div id="vars"></div></div>
+</section>
+<section class="grid">
+<div class="card alerta"><h2>¿Qué tan bien predicen los modelos?</h2><p class="nota">Aciertos balanceados con validación dejando una persona fuera. La línea punteada es el azar (50 %).</p><div id="modelos"></div></div>
+<div class="card"><h2>Calidad de los datos</h2><p class="nota">Lo que hicimos antes de analizar.</p><ul id="calidad"></ul></div>
+</section>
+<footer>Datos anónimos: sin correos, números de cuenta ni marcas de tiempo. Con tan pocas personas, todo resultado es exploratorio. Fuente: Base_Datos_Personalidad.db.</footer>
+</main>
+<script>
+const D=[{"id_persona": "U001", "perfil": "Introvertido", "genero_femenino": 0, "mus_tiempo_horas": 0.0, "tiene_pareja": 1.0, "rol_lider": 1, "reaccion_incomodidad": 0, "problema_con_otros": 1, "act_conversar": 0, "usa_spotify": 0, "usa_youtube": 0}, {"id_persona": "U002", "perfil": "Introvertido", "genero_femenino": 1, "mus_tiempo_horas": 5.0, "tiene_pareja": null, "rol_lider": 0, "reaccion_incomodidad": 0, "problema_con_otros": 1, "act_conversar": 0, "usa_spotify": 1, "usa_youtube": 1}, {"id_persona": "U003", "perfil": "Introvertido", "genero_femenino": 0, "mus_tiempo_horas": 9.0, "tiene_pareja": 1.0, "rol_lider": 0, "reaccion_incomodidad": 0, "problema_con_otros": 0, "act_conversar": 0, "usa_spotify": 0, "usa_youtube": 1}, {"id_persona": "U004", "perfil": "No introvertido", "genero_femenino": 1, "mus_tiempo_horas": 4.0, "tiene_pareja": 1.0, "rol_lider": 1, "reaccion_incomodidad": 1, "problema_con_otros": 1, "act_conversar": 0, "usa_spotify": 1, "usa_youtube": 0}, {"id_persona": "U005", "perfil": "Introvertido", "genero_femenino": 1, "mus_tiempo_horas": 15.0, "tiene_pareja": 0.0, "rol_lider": 0, "reaccion_incomodidad": 1, "problema_con_otros": 0, "act_conversar": 0, "usa_spotify": 0, "usa_youtube": 1}, {"id_persona": "U006", "perfil": "Por revisar", "genero_femenino": 1, "mus_tiempo_horas": 8.0, "tiene_pareja": 0.0, "rol_lider": 0, "reaccion_incomodidad": 1, "problema_con_otros": 1, "act_conversar": 0, "usa_spotify": 1, "usa_youtube": 0}, {"id_persona": "U007", "perfil": "Introvertido", "genero_femenino": 0, "mus_tiempo_horas": 3.0, "tiene_pareja": 0.0, "rol_lider": 0, "reaccion_incomodidad": 1, "problema_con_otros": 1, "act_conversar": 1, "usa_spotify": 0, "usa_youtube": 0}, {"id_persona": "U008", "perfil": "Introvertido", "genero_femenino": 1, "mus_tiempo_horas": 7.0, "tiene_pareja": 0.0, "rol_lider": 0, "reaccion_incomodidad": 1, "problema_con_otros": 1, "act_conversar": 0, "usa_spotify": 1, "usa_youtube": 1}, {"id_persona": "U009", "perfil": "No introvertido", "genero_femenino": 0, "mus_tiempo_horas": 5.0, "tiene_pareja": 1.0, "rol_lider": 1, "reaccion_incomodidad": 0, "problema_con_otros": 1, "act_conversar": 1, "usa_spotify": 1, "usa_youtube": 0}, {"id_persona": "U010", "perfil": "No introvertido", "genero_femenino": 0, "mus_tiempo_horas": 4.0, "tiene_pareja": 0.0, "rol_lider": 1, "reaccion_incomodidad": 0, "problema_con_otros": 0, "act_conversar": 0, "usa_spotify": 0, "usa_youtube": 1}, {"id_persona": "U011", "perfil": "Introvertido", "genero_femenino": 0, "mus_tiempo_horas": 3.0, "tiene_pareja": 0.0, "rol_lider": 1, "reaccion_incomodidad": 0, "problema_con_otros": 0, "act_conversar": 1, "usa_spotify": 1, "usa_youtube": 1}, {"id_persona": "U012", "perfil": "Por revisar", "genero_femenino": 0, "mus_tiempo_horas": 1.0, "tiene_pareja": 0.0, "rol_lider": 1, "reaccion_incomodidad": 0, "problema_con_otros": 1, "act_conversar": 0, "usa_spotify": 0, "usa_youtube": 1}, {"id_persona": "U013", "perfil": "Introvertido", "genero_femenino": 0, "mus_tiempo_horas": 1.0, "tiene_pareja": 1.0, "rol_lider": 0, "reaccion_incomodidad": 1, "problema_con_otros": 1, "act_conversar": 0, "usa_spotify": 1, "usa_youtube": 1}, {"id_persona": "U014", "perfil": "Introvertido", "genero_femenino": 1, "mus_tiempo_horas": 2.0, "tiene_pareja": 1.0, "rol_lider": 0, "reaccion_incomodidad": 1, "problema_con_otros": 1, "act_conversar": 1, "usa_spotify": 0, "usa_youtube": 1}, {"id_persona": "U015", "perfil": "No introvertido", "genero_femenino": 0, "mus_tiempo_horas": 7.0, "tiene_pareja": 0.0, "rol_lider": 0, "reaccion_incomodidad": 1, "problema_con_otros": 1, "act_conversar": 1, "usa_spotify": 1, "usa_youtube": 0}, {"id_persona": "U016", "perfil": "No introvertido", "genero_femenino": 0, "mus_tiempo_horas": 5.0, "tiene_pareja": 1.0, "rol_lider": 0, "reaccion_incomodidad": 1, "problema_con_otros": 0, "act_conversar": 0, "usa_spotify": 0, "usa_youtube": 1}, {"id_persona": "U017", "perfil": "Introvertido", "genero_femenino": 0, "mus_tiempo_horas": 1.0, "tiene_pareja": 1.0, "rol_lider": 0, "reaccion_incomodidad": 1, "problema_con_otros": 0, "act_conversar": 0, "usa_spotify": 1, "usa_youtube": 0}, {"id_persona": "U018", "perfil": "No introvertido", "genero_femenino": 0, "mus_tiempo_horas": 4.0, "tiene_pareja": 0.0, "rol_lider": 0, "reaccion_incomodidad": 1, "problema_con_otros": 0, "act_conversar": 1, "usa_spotify": 0, "usa_youtube": 1}, {"id_persona": "U019", "perfil": "Introvertido", "genero_femenino": 1, "mus_tiempo_horas": null, "tiene_pareja": 1.0, "rol_lider": 0, "reaccion_incomodidad": 1, "problema_con_otros": 1, "act_conversar": 1, "usa_spotify": 1, "usa_youtube": 0}, {"id_persona": "U020", "perfil": "Introvertido", "genero_femenino": 0, "mus_tiempo_horas": 5.0, "tiene_pareja": null, "rol_lider": 1, "reaccion_incomodidad": 0, "problema_con_otros": 1, "act_conversar": 0, "usa_spotify": 0, "usa_youtube": 0}, {"id_persona": "U021", "perfil": "Introvertido", "genero_femenino": 0, "mus_tiempo_horas": 2.0, "tiene_pareja": 0.0, "rol_lider": 0, "reaccion_incomodidad": 1, "problema_con_otros": 1, "act_conversar": 1, "usa_spotify": 0, "usa_youtube": 0}, {"id_persona": "U022", "perfil": "Introvertido", "genero_femenino": 0, "mus_tiempo_horas": 2.0, "tiene_pareja": null, "rol_lider": 0, "reaccion_incomodidad": 0, "problema_con_otros": 0, "act_conversar": 0, "usa_spotify": 1, "usa_youtube": 0}, {"id_persona": "U023", "perfil": "No introvertido", "genero_femenino": 0, "mus_tiempo_horas": 4.0, "tiene_pareja": null, "rol_lider": 0, "reaccion_incomodidad": 0, "problema_con_otros": 1, "act_conversar": 1, "usa_spotify": 0, "usa_youtube": 1}],M=[{"modelo": "Árbol de decisión (prof. 2)", "aciertos_balanceados": 0.679, "f1": 0.588, "auc": 0.541}, {"modelo": "Bosque aleatorio", "aciertos_balanceados": 0.43, "f1": 0.17, "auc": 0.57}, {"modelo": "Base (siempre la categoría común)", "aciertos_balanceados": 0.5, "f1": 0.0, "auc": 0.5}, {"modelo": "k vecinos (k = 3)", "aciertos_balanceados": 0.429, "f1": 0.267, "auc": 0.454}, {"modelo": "Regresión logística", "aciertos_balanceados": 0.214, "f1": 0.0, "auc": 0.153}],R={"personas_modelado": 21.0, "introvertidos": 14.0, "no_introvertidos": 7.0, "mejor_modelo": "Árbol de decisión (prof. 2)", "aciertos_balanceados_mejor": 0.6786, "valor_p_azar": 0.2277, "repeticiones_prueba_azar": 100.0, "rand_ajustado_kmeans": -0.0645, "silueta_kmeans": 0.2025};
+const VARS=[["rol_lider","Se describe como líder"],["reaccion_incomodidad","Se incomoda con cambios de plan"],["problema_con_otros","Pide ayuda ante un problema"],["act_conversar","Disfruta platicar con otros"],["usa_spotify","Usa Spotify"],["usa_youtube","Usa YouTube"]];
+const $=id=>document.getElementById(id);let sel="Todos";
+const pct=(a,b)=>b?Math.round(100*a/b):0;
+const bar=(p,c,l,t)=>'<div class="row"><span>'+l+'</span><div class="track"><div class="fill" style="width:'+p+'%;background:var('+c+')"></div></div><b>'+t+'</b></div>';
+function grupo(){return D.filter(d=>d.perfil!=="Por revisar"&&(sel==="Todos"||(sel==="Femenino")===(d.genero_femenino===1)));}
+function render(){
+ const g=grupo(),n=g.length,P={"Introvertido":g.filter(d=>d.perfil==="Introvertido"),"No introvertido":g.filter(d=>d.perfil==="No introvertido")},C=["--a","--b"];
+ $("nperf").textContent=n+" personas"+(n<10?" (muy pocas: cuidado al interpretar)":"");
+ $("perfiles").innerHTML=Object.entries(P).map(([k,v],i)=>bar(pct(v.length,n),C[i],k,pct(v.length,n)+"% ("+v.length+")")).join("");
+ $("vars").innerHTML=VARS.map(([c,l])=>'<div class="grp"><h4>'+l+'</h4>'+Object.entries(P).map(([k,v],i)=>{const s=v.filter(d=>d[c]===1).length;return bar(pct(s,v.length),C[i],k,pct(s,v.length)+"% ("+s+")");}).join("")+'</div>').join("");
+}
+const tot=D.filter(d=>d.perfil!=="Por revisar"),intro=tot.filter(d=>d.perfil==="Introvertido").length,best=R.aciertos_balanceados_mejor,p=R.valor_p_azar;
+$("hero").textContent="Todavía no. Con "+tot.length+" personas, el mejor modelo ("+R.mejor_modelo+") acierta "+best.toFixed(2)+" en la métrica balanceada, pero el azar lo iguala en "+Math.round(p*100)+" de cada 100 intentos. Aun así, el proceso completo quedó construido y medimos hasta dónde se puede llegar.";
+$("kpis").innerHTML=[[tot.length,"personas con perfil (de "+D.length+")"],[pct(intro,tot.length)+"%","son introvertidas"],[best.toFixed(2),"mejor resultado (azar = 0.50)"],[p.toFixed(2),"valor p: no se descarta el azar"]].map(k=>'<div class="card kpi"><b>'+k[0]+'</b><span>'+k[1]+'</span></div>').join("");
+const ord=[...M].sort((a,b)=>b.aciertos_balanceados-a.aciertos_balanceados);
+$("modelos").innerHTML=ord.map(m=>{const w=Math.round(m.aciertos_balanceados*100);return '<div class="row"><span>'+m.modelo+'</span><div class="track"><div class="fill" style="width:'+w+'%;background:var(--a)"></div><div class="ref"></div></div><b>'+m.aciertos_balanceados.toFixed(2)+'</b></div>';}).join("");
+const sinAmor=D.filter(d=>d.tiene_pareja===null).length;
+$("calidad").innerHTML=["Respuestas de 3 formularios unidas por persona, de forma anónima.","Limpieza con reglas y expresiones regulares, sin IA; cada paso queda en la bitácora.","Se excluyó 1 respuesta repetida y 1 sin consentimiento.",D.length-tot.length+" personas sin perfil claro: quedan fuera del modelado.",sinAmor+" personas no respondieron el formulario de relaciones amorosas."].map(t=>"<li>"+t+"</li>").join("");
+document.querySelectorAll("button[data-g]").forEach(b=>b.addEventListener("click",()=>{sel=b.dataset.g;document.querySelectorAll("button[data-g]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));render();}));
+render();
+</script></body></html>
