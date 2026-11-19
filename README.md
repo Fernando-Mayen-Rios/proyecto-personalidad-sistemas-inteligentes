@@ -1,12 +1,13 @@
 # Test de personalidad: ¿se puede predecir el perfil con formularios?
 
 Proyecto de **Sistemas Inteligentes** · UNAM · Matemáticas Aplicadas y Computación
-Equipo: 
+- Equipo: 
 - Chávez Ramírez Iker David
 - Mayen Rios Fernando
 - Rangel Sosa Oscar Yardel
 - Sanchez Lopez Miguel Angel
 - Torres Montes Sharon Danae
+  
 - Entrega: 18 de noviembre de 2026
 
 ## ¿De qué trata?
