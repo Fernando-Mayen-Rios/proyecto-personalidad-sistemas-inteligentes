@@ -79,7 +79,7 @@ El azar en aciertos balanceados es 0.50. Valor p del mejor modelo: **0.23** (100
 ## Tablero analítico
 
 - **Tablero en Looker Studio** (en la nube, sin Excel): https://datastudio.google.com/reporting/e5c1feb6-8241-4253-bd8a-579e87236460  
-- **Tablero web complementario** (en la nube): https://astounding-cactus-17e956.netlify.app. También está el archivo `Tablero analítico · Test de personalidad (1)` en este repositorio, que se abre con doble clic en el navegador.
+- **Tablero web** (en la nube): https://astounding-cactus-17e956.netlify.app. También está el archivo `Tablero analítico · Test de personalidad (1)` en este repositorio, que se abre con doble clic en el navegador.
 
 ## Contenido del repositorio
 
