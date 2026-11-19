@@ -7,7 +7,7 @@ Equipo:
 - Rangel Sosa Oscar Yardel
 - Sanchez Lopez Miguel Angel
 - Torres Montes Sharon Danae
- · Entrega: 18 de noviembre de 2026
+- Entrega: 18 de noviembre de 2026
 
 ## ¿De qué trata?
 
