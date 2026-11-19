@@ -1,7 +1,13 @@
 # Test de personalidad: ¿se puede predecir el perfil con formularios?
 
 Proyecto de **Sistemas Inteligentes** · UNAM · Matemáticas Aplicadas y Computación
-Equipo: [Nombres del equipo] · Entrega: 18 de noviembre de 2026
+Equipo: 
+- Chávez Ramírez Iker David
+- Mayen Rios Fernando
+- Rangel Sosa Oscar Yardel
+- Sanchez Lopez Miguel Angel
+- Torres Montes Sharon Danae
+ · Entrega: 18 de noviembre de 2026
 
 ## ¿De qué trata?
 
@@ -73,8 +79,8 @@ El azar en aciertos balanceados es 0.50. Valor p del mejor modelo: **0.23** (100
 
 ## Tablero analítico
 
-- **Tablero principal en Looker Studio** (en la nube, sin Excel): [pegar aquí el link]
-- **Tablero web complementario** (en la nube): [pegar aquí el link de Netlify]. También está el archivo `tablero_personalidad.html` en este repositorio, que se abre con doble clic en el navegador.
+- **Tablero en Looker Studio** (en la nube, sin Excel): https://datastudio.google.com/reporting/e5c1feb6-8241-4253-bd8a-579e87236460  
+- **Tablero web complementario** (en la nube): https://astounding-cactus-17e956.netlify.app. También está el archivo `Tablero analítico · Test de personalidad (1)` en este repositorio, que se abre con doble clic en el navegador.
 
 ## Contenido del repositorio
 
